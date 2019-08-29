@@ -4,14 +4,15 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 275,
-        margin: 12
+        maxWidth: 300,
+        margin: '12px 0 12px 12px'
     },
     name: {
         fontSize: 14
     },
     value: {
-        fontSize: 18
+        fontSize: 20,
+        fontWeight: "bold"
     }
 })
 
@@ -23,7 +24,7 @@ export default function MetricCard() {
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.name} component="p" variant="subtitle1">
-                    Metric Name 
+                    Metric Name :
                 </Typography>
                 <Typography className={classes.value} component="h2">
                     Metric Value
