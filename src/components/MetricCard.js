@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function MetricCard() {
+export default function MetricCard(props) {
 
     const classes = useStyles();
 
@@ -24,10 +24,10 @@ export default function MetricCard() {
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.name} component="p" variant="subtitle1">
-                    Metric Name :
+                    Metric Name : {props.name}
                 </Typography>
                 <Typography className={classes.value} component="h2">
-                    Metric Value
+                    Metric Value : {props.value}
                 </Typography>
             </CardContent>
         </Card>

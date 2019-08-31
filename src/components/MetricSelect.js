@@ -1,40 +1,82 @@
-import React, {useState, setState} from 'react';
-import { Container } from '@material-ui/core';
+import React, {useState, useEffect } from 'react';
+import { Container, LinearProgress } from '@material-ui/core';
 import { Dropdown } from 'semantic-ui-react';
+import { useQuery } from 'urql';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../store/actions'
 
-export default function MetricSelect() {
-
-    const options = [
-        {key: "tubingPressure", text: "Tubing Pressure", value: "tubingPressure"},
-        {Key: "casingPressure", text: "Casing Pressure", value: "casingPressure"},
-        {key: "oilTemp", text: "Oil Temp", value: "oilTemp"},
-        {key: "flareTemp", text: "Flare Temp", value: "flareTemp"},
-        {key: "waterTemp", text: "Water Temp", value: "waterTemp"},
-        {key: "ingValveOpen", text: "Valve Open", value: "injValveOpen"}
-    ]
-
-
-        const [state, setState] = React.useState({
-          switch: true,
-          value: []
+    const queryMetrics = `
+        query {
+            getMetrics
+        }
+    `;
+    
+    const getMetric = state => {
+        const getMetrics = state.metric.getMetrics;
+        return getMetrics;
+    }
+    
+    export default () => {
+            return <MetricSelect />
+    }
+    
+    const metricListDropdown = (options, getMetrics) => {
+        getMetrics.forEach(value => {
+          let obj = { key: value, text: value, value: value };
+          options.push(obj);
         });
+        return options;
+      };
 
-    const handleSelectionChange = (event, { value }) => {
-        setState({ ...state, value });
-    };
+   function MetricSelect() {
+     
+        const [selections, setSelections] = useState({ value: [] });
+        const dispatch = useDispatch();
+        
+        let query = queryMetrics;
+        let [result] = useQuery({ query });
+        const { fetching, data, error } = result;
+        
+        useEffect(
+            () => {
+            if (error) {
+                dispatch({ type: actions.API_ERROR, error: error.message });
+                return;
+            }
+            if (!data) return;
+            const { getMetrics }  = data;
+            dispatch({ type: actions.METRICS_RECEIVED, getMetrics });
+            }, 
+        [dispatch, data, error]
+        );
+        
+        let options = []
+        const getMetrics = useSelector(getMetric);
+        if (getMetrics.length !== 0) {
+            options = metricListDropdown(options, getMetrics)
+        }
+                
+        const handleSelectionChange = (event, { value }) => {
+            setSelections({ ...selections, value });
+        };
 
-    return (
-        <Container maxWidth="md">
-            <Dropdown  
-                placeholder='Select metric...'
-                fluid
-                selection
-                search
-                multiple
-                clearable
-                options={options}
-                onChange={handleSelectionChange}
-            />
-         </Container>
-    )
-}
+
+        if (fetching) return <LinearProgress />
+    
+        return (
+            <Container maxWidth="md">
+                <Dropdown  
+                    placeholder='Select metric...'
+                    fluid
+                    selection
+                    search
+                    multiple
+                    clearable
+                    options={options}
+                    onChange={handleSelectionChange}
+                    style={{margin: "12px"}}
+                />
+             </Container>
+        )
+    }
+
