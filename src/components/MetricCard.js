@@ -27,7 +27,7 @@ export default function MetricCard(props) {
                     Metric Name : {props.name}
                 </Typography>
                 <Typography className={classes.value} component="h2">
-                    Metric Value : {props.value}
+                    Metric Value : Coming Soon!
                 </Typography>
             </CardContent>
         </Card>
