@@ -16,10 +16,10 @@ import * as actions from '../store/actions'
         return getMetrics;
     }
 
-    const selectedMetric = state => {
-        const selectedMetrics = state.metric.selectedMetrics;
-        return selectedMetrics;
-    }
+    // const selectedMetric = state => {
+    //     const selectedMetrics = state.metric.selectedMetrics;
+    //     return selectedMetrics;
+    // }
     
     export default () => {
             return <MetricSelect />
@@ -62,7 +62,7 @@ import * as actions from '../store/actions'
         );
         
         const getMetrics = useSelector(getMetric);
-        const selected = useSelector(selectedMetric);
+        //const selected = useSelector(selectedMetric);
         
         let options = []
         if (getMetrics.length !== 0) {
