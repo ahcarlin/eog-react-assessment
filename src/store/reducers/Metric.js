@@ -1,13 +1,8 @@
 import * as actions from '../actions';
 
 const initialState = {
-    getMetrics: [],
-    selectedMetrics: []
-}
-
-const metricsReceived = (state, action) => {
-  const {getMetrics} = action;
-  return {...state, getMetrics}
+    selectedMetrics: [],
+    getMultipleMeasurements: []
 }
 
 const metricSelectionChange = (state, action) => {
@@ -15,9 +10,14 @@ const metricSelectionChange = (state, action) => {
   return {...state, selectedMetrics}
 }
 
+const multipleMeasurementsReceived = (state, action) => {
+  const {getMultipleMeasurements} = action;
+  return {...state, getMultipleMeasurements}
+}
+
 const handlers = {
-  [actions.METRICS_RECEIVED]: metricsReceived,
-  [actions.METRIC_SELECTION_CHANGE]: metricSelectionChange
+  [actions.METRIC_SELECTION_CHANGE]: metricSelectionChange,
+  [actions.MULTIPLE_MEASUREMENTS_RECEIVED]: multipleMeasurementsReceived
 };
   
 export default (state = initialState, action) => {

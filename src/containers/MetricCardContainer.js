@@ -10,7 +10,7 @@ export default function MetricCardContainer() {
 
     const renderCards = () => {
         return getSelected.map((name) =>{
-            return <MetricCard name={name} />
+            return <MetricCard key={name} name={name} />
         })
     }
 
