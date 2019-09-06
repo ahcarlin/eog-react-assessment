@@ -8,9 +8,27 @@ export default function MetricCardContainer() {
         return state.metric.selectedMetrics;
     })
 
-    const renderCards = () => {
-        return getSelected.map((name) =>{
-            return <MetricCard key={name} name={name} />
+    const getValue = useSelector(state => {
+        return state.metric.getMultipleMeasurements;
+    })
+
+    function renderCards() {
+
+        return getSelected.map((name) => {
+            for (let value of getValue) {
+                if (value.metric === name) {
+                    let lastIndex = value.measurements.length - 1;
+                    return (
+                        <MetricCard 
+                            key={name} 
+                            name={name} 
+                            value={value.measurements[lastIndex].value} 
+                            unit={value.measurements[lastIndex].unit} 
+                        />
+                    )
+                }
+            }
+            return null;
         })
     }
 
