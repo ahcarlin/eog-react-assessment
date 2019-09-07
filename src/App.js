@@ -10,6 +10,7 @@ import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
 import MetricSelect from "./components/MetricSelect";
 import MetricCardContainer from "./containers/MetricCardContainer";
+import Chart from "./components/Chart";
 //import NowWhat from "./components/NowWhat";
 
 const client = createClient({
@@ -44,6 +45,7 @@ const App = props => (
           <Header />
           {/* <NowWhat /> */}
           <MetricSelect />
+          <Chart />
           <MetricCardContainer />
           <ToastContainer /> 
         </Wrapper>
