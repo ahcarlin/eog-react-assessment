@@ -1,6 +1,7 @@
 import React from 'react';
 import MetricCard from '../components/MetricCard';
 import { useSelector } from 'react-redux';
+import { Grid } from '@material-ui/core';
 
 export default function MetricCardContainer() {
 
@@ -12,19 +13,19 @@ export default function MetricCardContainer() {
         return state.metric.getMultipleMeasurements;
     })
 
-    function renderCards() {
-
+    const renderCards = () => {
         return getSelected.map((name) => {
             for (let value of getValue) {
                 if (value.metric === name) {
                     let lastIndex = value.measurements.length - 1;
                     return (
-                        <MetricCard 
-                            key={name} 
-                            name={name} 
-                            value={value.measurements[lastIndex].value} 
-                            unit={value.measurements[lastIndex].unit} 
-                        />
+                        <Grid key={name} item>
+                            <MetricCard 
+                                name={name} 
+                                value={value.measurements[lastIndex].value} 
+                                unit={value.measurements[lastIndex].unit} 
+                            />
+                        </Grid>
                     )
                 }
             }
@@ -34,7 +35,9 @@ export default function MetricCardContainer() {
 
     return (
         <div>
-            {renderCards()}
+            <Grid container>
+                {renderCards()}
+            </Grid>
         </div>
     )
 }
