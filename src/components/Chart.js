@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'urql';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelectedMetrics, useMultipleMeasurements } from '../hooks/selectors';
 import {
     LineChart,
     Line,
@@ -22,11 +23,16 @@ const subscription = `
     }
 `;
 
+
+
 export default () => {
     return <Chart />;
 }
 
 function Chart() {
+
+    const getSelected = useSelectedMetrics();
+    const getValue = useMultipleMeasurements();
 
     return (
     <div style={{marginRight: "57px"}}>

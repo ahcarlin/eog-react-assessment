@@ -1,17 +1,12 @@
 import React from 'react';
 import MetricCard from '../components/MetricCard';
-import { useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
+import { useSelectedMetrics, useMultipleMeasurements } from '../hooks/selectors';
 
-export default function MetricCardContainer() {
+export default function MetricCardContainer(state) {
 
-    const getSelected = useSelector(state => {
-        return state.metric.selectedMetrics;
-    })
-
-    const getValue = useSelector(state => {
-        return state.metric.getMultipleMeasurements;
-    })
+    const getSelected = useSelectedMetrics();
+    const getValue = useMultipleMeasurements();
 
     const renderCards = () => {
         return getSelected.map((name) => {
