@@ -1,6 +1,6 @@
 import React from "react";
 import createStore from "./store";
-import { Provider as UrqlProvider, createClient } from "urql";
+import { Provider as UrqlProvider, createClient, defaultExchanges, subscriptionExchange } from "urql";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -12,9 +12,18 @@ import MetricSelect from "./components/MetricSelect";
 import MetricCardContainer from "./containers/MetricCardContainer";
 import Chart from "./components/Chart";
 //import NowWhat from "./components/NowWhat";
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+
+const subClient = new SubscriptionClient('ws://react.eogresources.com/graphql', {reconnect: true});
 
 const client = createClient({
   url: 'https://react.eogresources.com/graphql',
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: operation => subClient.request(operation)
+    })
+  ]
 });
 
 const store = createStore();

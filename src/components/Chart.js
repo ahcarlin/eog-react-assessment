@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'urql';
+import { useQuery, useSubscription } from 'urql';
 import { useDispatch } from 'react-redux';
 import { useSelectedMetrics, useMultipleMeasurements } from '../hooks/selectors';
 import {
@@ -33,6 +33,15 @@ function Chart() {
 
     const getSelected = useSelectedMetrics();
     const getValue = useMultipleMeasurements();
+
+    let query = subscription;
+
+    let [result] = useSubscription({
+        query
+    })
+    let { data, error } = result; 
+
+    console.log(data)
 
     return (
     <div style={{marginRight: "57px"}}>
