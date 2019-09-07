@@ -52,7 +52,7 @@ function MetricSelect() {
         {metricName: "flareTemp", after: now - 6000, before: now},
         {metricName: "waterTemp", after: now - 6000, before: now},
         {metricName: "injValveOpen", after: now - 6000, before: now}
-        ]
+    ]
     
     let query = queryMultiple;
 
@@ -65,10 +65,11 @@ function MetricSelect() {
     const handleSelectionChange = useCallback((event, { value }) => {
         setSelections({ ...selectedMetrics, value });
     }, [selectedMetrics]);
+    
     useEffect(
         () => {
         if (error) {
-            dispatch({ type: actions.API_ERROR, error: error.message });
+            dispatch({ type: actions.MULTIPLE_MEASUREMENTS_ERROR, error: error.message });
             return;
         }
         if (!data) return;
